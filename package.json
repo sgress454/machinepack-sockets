@@ -1,0 +1,33 @@
+{
+  "name": "machinepack-sockets",
+  "version": "0.1.0",
+  "description": "Work with sockets.",
+  "scripts": {
+    "test": "node ./node_modules/mocha/bin/mocha -b"
+  },
+  "keywords": [
+    "Sockets",
+    "machines",
+    "machinepack"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "machine": "^4.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.1.0"
+  },
+  "machinepack": {
+    "friendlyName": "Sockets",
+    "machineDir": "machines/",
+    "machines": [
+      "join",
+      "leave",
+      "broadcast",
+      "emit",
+      "blast",
+      "get-socket-id"
+    ]
+  }
+}
