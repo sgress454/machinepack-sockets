@@ -1,0 +1,10 @@
+{
+  "machine": "join",
+  "expectations": [
+    {
+      "todo": true,
+      "using": {},
+      "outcome": "success"
+    }
+  ]
+}

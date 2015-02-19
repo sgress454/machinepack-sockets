@@ -1,0 +1,10 @@
+{
+  "machine": "broadcast",
+  "expectations": [
+    {
+      "todo": true,
+      "using": {},
+      "outcome": "success"
+    }
+  ]
+}

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Work with sockets.",
   "scripts": {
-    "test": "node ./node_modules/mocha/bin/mocha -b"
+    "test": "node ./node_modules/test-machinepack-mocha/bin/testmachinepack-mocha.js"
   },
   "keywords": [
     "Sockets",
@@ -16,7 +16,8 @@
     "machine": "^4.0.0"
   },
   "devDependencies": {
-    "mocha": "^2.1.0"
+    "mocha": "^2.1.0",
+    "test-machinepack-mocha": "^0.2.2"
   },
   "machinepack": {
     "friendlyName": "Sockets",
@@ -28,6 +29,11 @@
       "emit",
       "blast",
       "get-socket-id"
-    ]
+    ],
+    "testsUrl": "https://travis-ci.org/sgress454/machinepack-sockets"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:sgress454/machinepack-sockets.git"
   }
 }
