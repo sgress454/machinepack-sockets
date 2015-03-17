@@ -1,6 +1,6 @@
 {
   "name": "machinepack-sockets",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "Work with sockets.",
   "scripts": {
     "test": "node ./node_modules/test-machinepack-mocha/bin/testmachinepack-mocha.js"
