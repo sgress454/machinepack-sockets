@@ -12,13 +12,14 @@ module.exports = {
     socketIds: {
       friendlyName: 'Socket IDs',
       typeclass: 'array',
-      description: 'Unique identifiers of the sockets to subscribe to the room.'
+      description: 'Unique identifiers of the sockets to subscribe to the room.',
+      required: true
     }
   },
-  environment: ['req', 'sails'],
-  defaultExit: 'then',
+  environment: ['sails'],
+  defaultExit: 'success',
   exits: { error: { description: 'Unexpected error occurred.' },
-    then: { description: 'Done.', void: true } },
+    success: { description: 'Done.' } },
   fn: function (inputs,exits,env) {
     env.sails.sockets.leave(
       inputs.socketIds,
