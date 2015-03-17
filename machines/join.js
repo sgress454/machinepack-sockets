@@ -12,19 +12,20 @@ module.exports = {
     socketIds: {
       friendlyName: 'Socket IDs',
       typeclass: 'array',
-      description: 'Unique identifiers of the sockets to subscribe to the room.'
+      description: 'Unique identifiers of the sockets to subscribe to the room.',
+      required: true
     }
   },
   environment: ['sails'],
-  defaultExit: 'then',
+  defaultExit: 'success',
   exits: { error: { description: 'Unexpected error occurred.' },
-    then: { description: 'Done.', void: true } },
+    success: { friendlyName: 'then', description: 'Done.', void: true } },
   fn: function (inputs,exits,env) {
     env.sails.sockets.join(
       inputs.socketIds,
       inputs.roomName
     );
-    return exits.then();
+    return exits.success();
   },
 
 };
