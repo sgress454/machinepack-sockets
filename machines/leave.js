@@ -1,7 +1,8 @@
 module.exports = {
-  friendlyName: 'Leave',
+  friendlyName: 'Leave room',
   description: 'Unsubscribes the specified sockets from a room.',
   extendedDescription: 'Unsubscribes the sockets from the room with the specified name.  Any messages subsequently broadcast to the room will no longer be received by those sockets.',
+  sync: true,
   inputs: {
     roomName: {
       friendlyName: 'Room name',
@@ -19,13 +20,13 @@ module.exports = {
   environment: ['sails'],
   defaultExit: 'success',
   exits: { error: { description: 'Unexpected error occurred.' },
-    success: { description: 'Done.' } },
+    success: { friendlyName: 'then', description: 'Done.' } },
   fn: function (inputs,exits,env) {
     env.sails.sockets.leave(
       inputs.socketIds,
       inputs.roomName
     );
-    return exits.then();
+    return exits.success();
   },
 
 };
