@@ -15,7 +15,7 @@ module.exports = {
       description: 'Unique identifiers of the sockets to subscribe to the room.'
     }
   },
-  environment: ['req', 'sails'],
+  environment: ['sails'],
   defaultExit: 'then',
   exits: { error: { description: 'Unexpected error occurred.' },
     then: { description: 'Done.', void: true } },
