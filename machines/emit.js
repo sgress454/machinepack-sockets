@@ -1,37 +1,59 @@
 module.exports = {
+
   friendlyName: 'Emit',
-  description: 'Send a message to a single socket.',
+
+
+  description: 'Send a message to one or more connected sockets.',
+
+
   extendedDescription: '',
+
+
   inputs: {
     socketIds: {
-      friendlyName: 'Socket IDs',
-      typeclass: 'array',
-      description: 'Unique identifiers of the sockets to send a message to.',
+      friendlyName: 'Recipients (socket IDs)',
+      example: ['a82ghda99319gadgaa3249103'],
+      description: 'Unique identifiers for the sockets who will receive this message.',
       required: true
     },
     eventName: {
+      friendlyName: 'Message name',
+      description: 'The name (aka "event name") to use for the message (just an arbitrary label)',
       example: 'news',
-      friendlyName: 'Event name',
-      description: 'The event name to use for the message.',
       required: true
     },
     data: {
       typeclass: '*',
-      friendlyName: 'Data',
+      friendlyName: 'Message data',
       description: 'Data to send with the message.',
     }
   },
+
+
   environment: ['sails'],
-  defaultExit: 'then',
-  exits: { error: { description: 'Unexpected error occurred.' },
-    then: { description: 'Done.', void: true } },
-  fn: function (inputs,exits,env) {
+
+
+  defaultExit: 'success',
+
+
+  exits: {
+    error: {
+      description: 'Unexpected error occurred.'
+    },
+    success: {
+      friendlyName: 'then',
+      description: 'Done.'
+    }
+  },
+
+
+  fn: function(inputs, exits, env) {
     env.sails.sockets.emit(
       inputs.socketIds,
-      inputs.eventName,
+      inputs.eventName || 'message',
       inputs.data || null
     );
-    return exits.then();
+    return exits.success();
   },
 
 };

@@ -2,6 +2,7 @@ module.exports = {
   friendlyName: 'Join room',
   description: 'Subscribes the specified sockets to a room.',
   extendedDescription: 'Subscribes the sockets to the room with the specified name.  Any messages subsequently broadcast to the room will be received by those sockets.',
+  idempotent: true,
   inputs: {
     roomName: {
       friendlyName: 'Room name',
@@ -18,9 +19,16 @@ module.exports = {
   },
   environment: ['sails'],
   defaultExit: 'success',
-  exits: { error: { description: 'Unexpected error occurred.' },
-    success: { friendlyName: 'then', description: 'Done.', void: true } },
-  fn: function (inputs,exits,env) {
+  exits: {
+    error: {
+      description: 'Unexpected error occurred.'
+    },
+    success: {
+      friendlyName: 'then',
+      description: 'Done.'
+    }
+  },
+  fn: function(inputs, exits, env) {
     env.sails.sockets.join(
       inputs.socketIds,
       inputs.roomName
