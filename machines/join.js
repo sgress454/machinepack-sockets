@@ -12,7 +12,7 @@ module.exports = {
     },
     socketIds: {
       friendlyName: 'Socket IDs',
-      typeclass: 'array',
+      example: ['a82ghda99319gadgaa3249103'],
       description: 'Unique identifiers of the sockets to subscribe to the room.',
       required: true
     }

@@ -1,6 +1,6 @@
 module.exports = {
 
-  friendlyName: 'Emit',
+  friendlyName: 'Send to sockets',
 
 
   description: 'Send a message to one or more connected sockets.',
@@ -13,7 +13,7 @@ module.exports = {
     socketIds: {
       friendlyName: 'Recipients (socket IDs)',
       example: ['a82ghda99319gadgaa3249103'],
-      description: 'Unique identifiers for the sockets who will receive this message.',
+      description: 'Unique identifiers of the sockets who will receive this message.',
       required: true
     },
     eventName: {

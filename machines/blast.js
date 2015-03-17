@@ -1,7 +1,7 @@
 module.exports = {
 
 
-  friendlyName: 'Blast to all',
+  friendlyName: 'Send to all',
 
 
   description: 'Blast out a message to all connected sockets.',

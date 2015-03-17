@@ -1,7 +1,7 @@
 module.exports = {
 
 
-  friendlyName: 'Broadcast to room',
+  friendlyName: 'Send to room',
 
 
   description: 'Broadcast a message to all connected sockets in the specified room.',
