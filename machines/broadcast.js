@@ -18,7 +18,7 @@ module.exports = {
       required: true
     },
     data: {
-      typeclass: '*',
+      example: '*',
       friendlyName: 'Message data',
       description: 'Data to send with the message.',
     },
@@ -38,9 +38,6 @@ module.exports = {
 
 
   environment: ['sails'],
-
-
-  defaultExit: 'success',
 
 
   exits: {
