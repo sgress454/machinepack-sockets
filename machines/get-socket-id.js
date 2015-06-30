@@ -1,11 +1,9 @@
 module.exports = {
   friendlyName: 'Get requesting socket ID',
   description: 'Get the unique ID of the socket making this virtual HTTP request.',
-  extendedDescription: '',
   sync: true,
   cacheable: true,
   inputs: {},
-  defaultExit: 'success',
   environment: ['req', 'sails'],
   exits: {
     error: {

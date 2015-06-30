@@ -33,9 +33,6 @@ module.exports = {
   environment: ['sails'],
 
 
-  defaultExit: 'success',
-
-
   exits: {
     error: {
       description: 'Unexpected error occurred.'
