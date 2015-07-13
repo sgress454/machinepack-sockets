@@ -1,6 +1,6 @@
 {
   "name": "machinepack-sockets",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Publish messages to rooms and/or sockets and more using Sails & Socket.io.",
   "scripts": {
     "test": "node ./node_modules/test-machinepack-mocha/bin/testmachinepack-mocha.js"
