@@ -9,6 +9,17 @@ module.exports = {
 
   inputs: {
 
+    eventListeners: {
+      description: 'A mapping of event listeners for client socket events.',
+      example: [
+        {
+          name: 'foobar',
+          fn: '->'
+        }
+      ],
+      defaultsTo: []
+    },
+
     baseUrl: {
       description: 'The base URL for the Sails.js server',
       example: 'http://localhost:1337',
@@ -58,6 +69,11 @@ module.exports = {
     });
 
 
+    // Set up a timeout for the initial socket connection request,
+    // as well as a spin-lock (`isDoneAlready`) to prevent accidentally
+    // firing `success` more than once if `connect` fires again for some
+    // reason (e.g. on reconnect).  This also prevents `success` from firing
+    // an extra time if the timeout pops before the initial `connect` event does.
     var isDoneAlready;
     var alarm = setTimeout(function socketConnectionTimedOut(){
       if (isDoneAlready){
@@ -73,7 +89,6 @@ module.exports = {
       }
       return exits.tookTooLong();
     }, inputs.timeout);
-
     socket.on('connect', function (){
       if (isDoneAlready){
         return;
@@ -81,6 +96,12 @@ module.exports = {
       isDoneAlready = true;
       clearTimeout(alarm);
       return exits.success(socket);
+    });
+
+
+    // Bind provided socket event handlers.
+    inputs.eventListeners.forEach(function (eventBinding){
+      socket.on(eventBinding.name, eventBinding.fn);
     });
 
   }
