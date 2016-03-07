@@ -1,10 +1,10 @@
 module.exports = {
   friendlyName: 'Get requesting socket ID',
-  description: 'Get the unique ID of the socket making this virtual HTTP request.',
+  description: 'Get the unique ID of the client socket making this virtual HTTP request.',
   sync: true,
   cacheable: true,
+  habitat: 'request',
   inputs: {},
-  environment: ['req', 'sails'],
   exits: {
     error: {
       description: 'Unexpected error occurred.'
@@ -22,7 +22,7 @@ module.exports = {
     if (!env.req.isSocket){
       return exits.reqNotCompatible();
     }
-    return exits.success(env.sails.sockets.id(env.req.socket));
+    return exits.success(env.req._sails.sockets.id(env.req.socket));
   },
 
 };

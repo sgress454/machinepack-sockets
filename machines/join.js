@@ -3,6 +3,7 @@ module.exports = {
   description: 'Subscribes the specified sockets to a room.',
   extendedDescription: 'Subscribes the sockets to the room with the specified name.  Any messages subsequently broadcast to the room will be received by those sockets.',
   idempotent: true,
+  habitat: 'sails',
   inputs: {
     roomName: {
       friendlyName: 'Room name',
@@ -17,7 +18,6 @@ module.exports = {
       required: true
     }
   },
-  environment: ['sails'],
   exits: {
     error: {
       description: 'Unexpected error occurred.'

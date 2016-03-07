@@ -13,6 +13,9 @@ module.exports = {
   idempotent: true,
 
 
+  habitat: 'sails',
+
+
   inputs: {
     roomName: {
       friendlyName: 'Room name',
@@ -27,9 +30,6 @@ module.exports = {
       required: true
     }
   },
-
-
-  environment: ['sails'],
 
 
   exits: {

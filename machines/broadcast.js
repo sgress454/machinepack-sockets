@@ -1,13 +1,16 @@
 module.exports = {
 
 
-  friendlyName: 'Send to room',
+  friendlyName: 'Broadcast',
 
 
   description: 'Broadcast a message to all connected sockets in the specified room.',
 
 
   extendedDescription: 'Note that this machine does not wait for any kind of acknowledgement of message delivery, so it is immediate/synchronous.',
+
+
+  habitat: 'sails',
 
 
   inputs: {
@@ -35,9 +38,6 @@ module.exports = {
       required: true
     }
   },
-
-
-  environment: ['sails'],
 
 
   exits: {
