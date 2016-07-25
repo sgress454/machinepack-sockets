@@ -16,7 +16,7 @@ module.exports = {
   inputs: {
     eventName: {
       friendlyName: 'Message name',
-      description: 'The name (aka "event name") to use for the message (just an arbitrary label)',
+      description: 'The name (aka "event name") to use for the message (just an arbitrary label).',
       example: 'news',
       required: true
     },
@@ -24,17 +24,6 @@ module.exports = {
       example: '*',
       friendlyName: 'Message data',
       description: 'Data to send with the message.',
-    }
-  },
-
-
-  exits: {
-    error: {
-      description: 'Unexpected error occurred.'
-    },
-    success: {
-      friendlyName: 'then',
-      description: 'Done.'
     }
   },
 

@@ -21,13 +21,13 @@ module.exports = {
     },
 
     baseUrl: {
-      description: 'The base URL for the Sails.js server',
+      description: 'The base URL for the Sails.js server.',
       example: 'http://localhost:1337',
       required: true
     },
 
     timeout: {
-      description: 'The max time to wait before giving up on initial connection (in miliseconds)',
+      description: 'The max time to wait before giving up on initial connection (in miliseconds).',
       example: 5000,
       defaultsTo: 5000
     }
@@ -37,15 +37,15 @@ module.exports = {
 
   exits: {
 
-    tookTooLong: {
-      description: 'The socket took too long to connect.  Are you sure your internet connection is working?  Or maybe the server is not online, or not accepting WebSocket traffic.',
-      extendedDescription: 'It is also possible the server is just slow, in which case you should increase the `timeout` option.'
+    success: {
+      outputDescription: 'A Sails.js/Socket.io client socket.',
+      outputFriendlyName: 'Socket',
+      outputExample: '==='
     },
 
-    success: {
-      description: 'Returns a Sails.js/Socket.io client socket.',
-      variableName: 'socket',
-      example: '==='
+    tookTooLong: {
+      description: 'The socket took too long to connect.',
+      extendedDescription: 'Are you sure your internet connection is working?  Or maybe the server is not online, or not accepting WebSocket traffic.  It is also possible the server is just slow, in which case you should increase the `timeout` option.'
     },
 
   },

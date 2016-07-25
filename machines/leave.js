@@ -10,7 +10,7 @@ module.exports = {
   extendedDescription: 'Unsubscribes the sockets from the room with the specified name.  Any messages subsequently broadcast to the room will no longer be received by those sockets.',
 
 
-  idempotent: true,
+  sideEffects: 'idempotent',
 
 
   habitat: 'sails',
@@ -18,7 +18,6 @@ module.exports = {
 
   inputs: {
     roomName: {
-      friendlyName: 'Room name',
       example: 'myChatRoom',
       description: 'The name of the room to leave.',
       required: true
@@ -28,17 +27,6 @@ module.exports = {
       example: ['a82ghda99319gadgaa3249103'],
       description: 'Unique identifiers of the sockets to subscribe to the room.',
       required: true
-    }
-  },
-
-
-  exits: {
-    error: {
-      description: 'Unexpected error occurred.'
-    },
-    success: {
-      friendlyName: 'then',
-      description: 'Done.'
     }
   },
 

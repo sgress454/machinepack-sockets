@@ -2,19 +2,17 @@ module.exports = {
   friendlyName: 'Get requesting socket ID',
   description: 'Get the unique ID of the client socket making this virtual HTTP request.',
   sync: true,
-  cacheable: true,
+  sideEffects: 'cacheable',
   habitat: 'request',
   inputs: {},
   exits: {
-    error: {
-      description: 'Unexpected error occurred.'
-    },
     success: {
-      friendlyName: 'then',
-      description: 'Done.',
-      example: 'abc123'
+      outputFriendlyName: 'Socket ID',
+      outputDescription: 'The ID of the requesting socket.',
+      outputExample: 'abc123'
     },
     reqNotCompatible: {
+      friendlyName: 'Request not compatible',
       description: 'This request did not originate from Socket.io.'
     }
   },
