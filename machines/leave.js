@@ -16,12 +16,16 @@ module.exports = {
   habitat: 'sails',
 
 
+  sync: true,
+
+
   inputs: {
     roomName: {
       example: 'myChatRoom',
       description: 'The name of the room to leave.',
       required: true
     },
+
     socketIds: {
       friendlyName: 'Socket IDs',
       example: ['a82ghda99319gadgaa3249103'],
@@ -32,10 +36,15 @@ module.exports = {
 
 
   fn: function(inputs, exits, env) {
+
+    // Use `sails.sockets.leave` to unsubscribe the sockets with the
+    // specified IDs from `inputs.roomName`.
     env.sails.sockets.leave(
       inputs.socketIds,
       inputs.roomName
     );
+
+    // Return through the `success` exit.
     return exits.success();
   },
 

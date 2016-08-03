@@ -3,7 +3,7 @@
   "version": "1.2.1",
   "description": "Publish messages to rooms and/or sockets and more using Sails & Socket.io.",
   "scripts": {
-    "test": "node ./node_modules/test-machinepack-mocha/bin/testmachinepack-mocha.js"
+    "test": "mocha tests/** -t 10000 -R spec"
   },
   "keywords": [
     "Sockets",
@@ -18,7 +18,11 @@
     "socket.io-client": "^1.3.5"
   },
   "devDependencies": {
+    "lodash": "^4.14.1",
     "mocha": "^2.1.0",
+    "sails": "^0.12.4",
+    "sails.io.js": "^0.11.7",
+    "socket.io": "^1.4.8",
     "test-machinepack-mocha": "^2.1.1"
   },
   "machinepack": {

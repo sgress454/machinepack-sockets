@@ -52,22 +52,25 @@ module.exports = {
 
 
   fn: function (inputs,exits) {
+
+    // Import `socket.io-client`
     var SocketIOClient = require('socket.io-client');
+
+    // Import `sails.io.js`
     var SailsIOClient = require('sails.io.js');
 
-    // Instantiate the socket client (`io`)
-    // (we must explicitly pass in the socket.io client when using this library from Node.js)
+    // Instantiate the socket client (`io`).
+    // We must explicitly pass in the socket.io client when
+    // using this library from Node.js.
     var io = SailsIOClient(SocketIOClient);
 
-    // Set some options:
-    io.sails.autoConnect = false; // <= prevent a socket from being automatically connected
-    io.sails.environment = 'production';    // <= disable log output
+    // Prevent the socket from being automatically connected.
+    io.sails.autoConnect = false;
+    // Disable log output for the socket.
+    io.sails.environment = 'production';
 
-    var socket = io.sails.connect(inputs.baseUrl, {
-      multiplex: false,          //<= prevent weird entanglement if this happens to get required more than once
-      transports: ['websocket']  //<= only use WebSockets (no need for long-polling, etc-- this isn't a browser.)
-    });
-
+    // Declare a var to hold the socket we'll attempt to connect.
+    var socket;
 
     // Set up a timeout for the initial socket connection request,
     // as well as a spin-lock (`isDoneAlready`) to prevent accidentally
@@ -76,28 +79,48 @@ module.exports = {
     // an extra time if the timeout pops before the initial `connect` event does.
     var isDoneAlready;
     var alarm = setTimeout(function socketConnectionTimedOut(){
+      // If the timeout happens after the spinlock is set,
+      // do nothing (we already connected).
       if (isDoneAlready){
         return;
       }
+      // Set the spinlock.
       isDoneAlready = true;
+      // Attempt to gracefully disconnect the socket.
       // TODO: also unbind connection event for performance reasons (i.e. socket.off())
       try {
         socket.disconnect();
       }
+      // Forward errors disconnecting the socket to the `error` exit.
       catch (e) {
         return exits.error('Socket took too long, and then there was an additional error disconnecting it:\n'+e.stack);
       }
+      // Leave through the `tookTooLong` exit.
       return exits.tookTooLong();
     }, inputs.timeout);
+
+    // Attempt to connect the socket.
+    socket = io.sails.connect(inputs.baseUrl, {
+      // Ensure that each connected socket is unique.
+      multiplex: false,
+      // Only use WebSockets.
+      // No need for long-polling, etc-- this isn't a browser.
+      transports: ['websocket']
+    });
+
+    // Set up a handler for the initial socket connection.
     socket.on('connect', function (){
+      // If the spinlock is set, do nothing (we already timed out).
       if (isDoneAlready){
         return;
       }
+      // Set the spinlock.
       isDoneAlready = true;
+      // Clear the timeout.
       clearTimeout(alarm);
+      // Return the connected socket through the `success` exit.
       return exits.success(socket);
     });
-
 
     // Bind provided socket event handlers.
     inputs.eventListeners.forEach(function (eventBinding){

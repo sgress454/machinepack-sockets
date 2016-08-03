@@ -13,6 +13,9 @@ module.exports = {
   habitat: 'sails',
 
 
+  sync: true,
+
+
   inputs: {
     eventName: {
       friendlyName: 'Message name',
@@ -29,10 +32,15 @@ module.exports = {
 
 
   fn: function(inputs, exits, env) {
+
+    // Use `sails.sockets.blast` to send the message to
+    // all connected sockets!
     env.sails.sockets.blast(
       inputs.eventName || 'message',
       inputs.data || null
     );
+
+    // Return through the `success` exit.
     return exits.success();
   }
 
