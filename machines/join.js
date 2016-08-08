@@ -39,7 +39,7 @@ module.exports = {
 
   fn: function(inputs, exits, env) {
 
-    // Import the `isObject Lodash function.
+    // Import the `isObject` Lodash function.
     var _isObject = require('lodash.isobject');
 
     // If we don't have a Sails app in our environment, bail through the `error` exit.
