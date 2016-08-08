@@ -90,7 +90,7 @@ describe('machinepack-sockets: connect-client-socket', function() {
       timeout: 100
     }).exec({
       success: function() {
-        return done(new Error('Called `tookTooLong` exit!'));
+        return done(new Error('Called `success` exit!'));
       },
       error: done,
       tookTooLong: function() {
