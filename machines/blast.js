@@ -17,17 +17,20 @@ module.exports = {
 
 
   inputs: {
+
     eventName: {
       friendlyName: 'Message name',
       description: 'The name (aka "event name") to use for the message (just an arbitrary label).',
       example: 'news',
       required: true
     },
+
     data: {
       example: '*',
       friendlyName: 'Message data',
       description: 'Data to send with the message.',
     }
+
   },
 
 

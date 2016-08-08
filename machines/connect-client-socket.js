@@ -9,6 +9,12 @@ module.exports = {
 
   inputs: {
 
+    baseUrl: {
+      description: 'The base URL for the Sails.js server.',
+      example: 'http://localhost:1337',
+      required: true
+    },
+
     eventListeners: {
       description: 'A mapping of event listeners for client socket events.',
       example: [
@@ -18,12 +24,6 @@ module.exports = {
         }
       ],
       defaultsTo: []
-    },
-
-    baseUrl: {
-      description: 'The base URL for the Sails.js server.',
-      example: 'http://localhost:1337',
-      required: true
     },
 
     timeout: {
@@ -53,10 +53,10 @@ module.exports = {
 
   fn: function (inputs,exits) {
 
-    // Import `socket.io-client`
+    // Import `socket.io-client`.
     var SocketIOClient = require('socket.io-client');
 
-    // Import `sails.io.js`
+    // Import `sails.io.js`.
     var SailsIOClient = require('sails.io.js');
 
     // Instantiate the socket client (`io`).
@@ -66,6 +66,7 @@ module.exports = {
 
     // Prevent the socket from being automatically connected.
     io.sails.autoConnect = false;
+
     // Disable log output for the socket.
     io.sails.environment = 'production';
 
@@ -93,7 +94,7 @@ module.exports = {
       }
       // Forward errors disconnecting the socket to the `error` exit.
       catch (e) {
-        return exits.error('Socket took too long, and then there was an additional error disconnecting it:\n'+e.stack);
+        return exits.error(new Error('Socket took too long, and then there was an additional error disconnecting it:\n'+e.stack));
       }
       // Leave through the `tookTooLong` exit.
       return exits.tookTooLong();
