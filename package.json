@@ -13,6 +13,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "lodash.isobject": "^3.0.2",
     "machine": "^12.3.0",
     "sails.io.js": "^0.11.5",
     "socket.io-client": "^1.3.5"
