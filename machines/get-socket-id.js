@@ -39,7 +39,7 @@ module.exports = {
     // If the request is not a socket request, leave through
     // the `reqNotCompatible` exit.
     if (!env.req.isSocket){
-      return exits.reqNotCompatible();
+      return exits.error(new Error('The request was not made via socket.io.'));
     }
 
     // Otherwise return the requesting socket's ID through

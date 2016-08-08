@@ -5,7 +5,7 @@ var Sockets = require('../');
 var _ = require('lodash');
 var lifecycle = require('./helpers/lifecycle');
 
-describe('machinepack-sockets: get-socket-id', function() {
+describe('machinepack-sockets: is-socket-request', function() {
 
   var app;
   var io;
@@ -14,10 +14,14 @@ describe('machinepack-sockets: get-socket-id', function() {
   before(function(done) {
     lifecycle.liftSails({
       routes: {
-        '/getSocketId': function(req, res) {
-          Sockets.getSocketId().setEnvironment({req: req}).exec({
-            success: function(socketId) {return res.ok(socketId);},
-            error: function() {return res.ok('reqNotCompatible');}
+        '/isSocketRequest': function(req, res) {
+          Sockets.isSocketRequest().setEnvironment({req: req}).exec({
+            success: function(isSocket) {
+              if (isSocket) {return res.ok(true);}
+              // Because the virtual request interpreter doesn't dig `false` as a body.
+              return res.ok('not a socket request!');
+            },
+            error: function(e) {console.log(e);return res.serverError();}
           });
         }
       }
@@ -34,7 +38,7 @@ describe('machinepack-sockets: get-socket-id', function() {
   });
 
 
-  describe('with valid inputs', function() {
+  describe('when called using socket.io', function() {
 
     var socket;
     before(function(done) {
@@ -47,9 +51,9 @@ describe('machinepack-sockets: get-socket-id', function() {
       setTimeout(done, 500);
     });
 
-    it('should return the correct socket ID', function(done) {
-      socket.get('/getSocketId', function(socketId) {
-        assert.equal(socketId, '/#' + socket._raw.id);
+    it('should return `true` through the success exit', function(done) {
+      socket.get('/isSocketRequest', function(isSocket) {
+        assert.equal(isSocket, true);
         return done();
       });
     });
@@ -57,9 +61,9 @@ describe('machinepack-sockets: get-socket-id', function() {
 
   describe('when called from a non-socket request', function() {
 
-    it('should return through the `error` exit', function(done) {
-      app.request('/getSocketId', function(err, response, body) {
-        assert.equal(body, 'reqNotCompatible');
+    it('should return `false` through the success exit', function(done) {
+      app.request('/isSocketRequest', function(err, response, body) {
+        assert.equal(body, 'not a socket request!');
         return done();
       });
     });

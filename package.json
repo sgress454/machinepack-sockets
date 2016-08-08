@@ -34,7 +34,8 @@
       "broadcast",
       "blast",
       "get-socket-id",
-      "connect-client-socket"
+      "connect-client-socket",
+      "is-socket-request"
     ],
     "testsUrl": "https://travis-ci.org/sgress454/machinepack-sockets"
   },
