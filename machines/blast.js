@@ -33,6 +33,19 @@ module.exports = {
 
   fn: function(inputs, exits, env) {
 
+    // Import `lodash`.
+    var _ = require('lodash');
+
+    // If we don't have a Sails app in our environment, bail through the `error` exit.
+    if (!_.isObject(env.sails) || env.sails.constructor.name !== 'Sails') {
+      return exits.error(new Error('A valid Sails app must be provided through `.setEnv()` in order to use this machine.'));
+    }
+
+    // If we don't have the sockets hook enabled in our environment, bail through the `error` exit.
+    if (!_.isObject(env.sails.sockets)) {
+      return exits.error(new Error('The `sockets` hook must be enabled on the passed-in Sails app in order to use this machine.'));
+    }
+
     // Use `sails.sockets.blast` to send the message to
     // all connected sockets!
     env.sails.sockets.blast(
