@@ -13,7 +13,7 @@ module.exports = {
   sideEffects: 'cacheable',
 
 
-  habitat: 'sails',
+  habitat: 'request',
 
 
   inputs: {},
