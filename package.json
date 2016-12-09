@@ -3,14 +3,14 @@
   "version": "1.2.1",
   "description": "Publish messages to rooms and/or sockets and more using Sails & Socket.io.",
   "scripts": {
-    "test": "mocha tests/** -t 10000 -R spec"
+    "test": "mocha tests/*.js -t 10000 -R spec"
   },
   "keywords": [
     "Sockets",
     "machines",
     "machinepack"
   ],
-  "author": "",
+  "author": "The Treeline Company",
   "license": "MIT",
   "dependencies": {
     "@sailshq/lodash": "3.10.2",
