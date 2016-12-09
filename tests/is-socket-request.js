@@ -15,7 +15,7 @@ describe('machinepack-sockets: is-socket-request', function() {
     lifecycle.liftSails({
       routes: {
         '/isSocketRequest': function(req, res) {
-          Sockets.isSocketRequest().setEnvironment({req: req}).exec({
+          Sockets.isSocketRequest().setEnv({req: req}).exec({
             success: function(isSocket) {
               if (isSocket) {return res.ok(true);}
               // Because the virtual request interpreter doesn't dig `false` as a body.

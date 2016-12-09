@@ -34,7 +34,7 @@ describe('machinepack-sockets: blast', function() {
       _.each([socket1, socket2], function(socket) {
         socket.on('connect', function() {
           connectedSockets.push(socket);
-          if (connectedSockets.length === 2) {return done();}
+          if (connectedSockets.length === 2) { return done(); }
         });
       });
     });
@@ -52,14 +52,14 @@ describe('machinepack-sockets: blast', function() {
         socket.on('foo', function(data) {
           assert.equal(data, 'bar!');
           receivedMsg.push(socket);
-          if (receivedMsg.length === 2) {return done();}
+          if (receivedMsg.length === 2) { return done(); }
         });
       });
 
       Sockets.blast({
         eventName: 'foo',
         data: 'bar!'
-      }).setEnvironment({sails: app}).execSync();
+      }).setEnv({sails: app}).execSync();
 
     });
 

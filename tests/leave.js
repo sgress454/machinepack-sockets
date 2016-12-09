@@ -66,13 +66,13 @@ describe('machinepack-sockets: leave', function() {
       Sockets.leave({
         roomName: 'beyonce',
         socketIds: ['/#'+socket2._raw.id, '/#'+socket3._raw.id]
-      }).setEnvironment({sails: app}).execSync();
+      }).setEnv({sails: app}).execSync();
 
       Sockets.broadcast({
         roomName: 'beyonce',
         eventName: 'ifyoulikeit',
         data: 'putaringonit!'
-      }).setEnvironment({sails: app}).execSync();
+      }).setEnv({sails: app}).execSync();
 
       // Wait 500ms and see who bites
       setTimeout(function() {

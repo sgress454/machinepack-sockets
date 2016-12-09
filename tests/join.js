@@ -65,13 +65,13 @@ describe('machinepack-sockets: join', function() {
       Sockets.join({
         roomName: 'powerrangers',
         socketIds: ['/#'+socket1._raw.id, '/#'+socket2._raw.id]
-      }).setEnvironment({sails: app}).execSync();
+      }).setEnv({sails: app}).execSync();
 
       Sockets.broadcast({
         roomName: 'powerrangers',
         eventName: 'whoopdie',
         data: 'doo!'
-      }).setEnvironment({sails: app}).execSync();
+      }).setEnv({sails: app}).execSync();
 
       // Wait 500ms and see who bites
       setTimeout(function() {

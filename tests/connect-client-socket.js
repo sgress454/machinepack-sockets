@@ -67,7 +67,8 @@ describe('machinepack-sockets: connect-client-socket', function() {
     });
 
     it('should be able to send Sails requests', function(done) {
-      socket.get('/owl', function(responseBody) {
+      socket.get('/owl', function(responseBody, jwr) {
+        if (jwr.error) { return done(jwr.error); }
         assert.equal(responseBody, 'hoot');
         return done();
       });

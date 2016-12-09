@@ -43,7 +43,11 @@ describe('machinepack-sockets: broadcast', function() {
           connectedSockets.push(socket);
           if (connectedSockets.length === 2) {
             // Subscribe socket 1 to the `hollapeeps` room
-            socket1.get('/join', done);
+            socket1.get('/join', function (data, jwr) {
+              if (jwr.error) { return done(jwr.error); }
+              if (jwr.statusCode !== 200) { return done(new Error('Expected 200 status code but instead got: '+jwr.statusCode)); }
+              return done();
+            });
           }
         });
       });
@@ -70,7 +74,7 @@ describe('machinepack-sockets: broadcast', function() {
         roomName: 'hollapeeps',
         eventName: 'holla',
         data: 'yoyoyo!'
-      }).setEnvironment({sails: app}).execSync();
+      }).setEnv({sails: app}).execSync();
 
       // Wait 500ms and see who bites
       setTimeout(function() {

@@ -15,7 +15,7 @@ describe('machinepack-sockets: get-socket-id', function() {
     lifecycle.liftSails({
       routes: {
         '/getSocketId': function(req, res) {
-          Sockets.getSocketId().setEnvironment({req: req}).exec({
+          Sockets.getSocketId().setEnv({req: req}).exec({
             success: function(socketId) {return res.ok(socketId);},
             error: function() {return res.ok('reqNotCompatible');}
           });

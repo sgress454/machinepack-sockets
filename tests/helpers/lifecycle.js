@@ -23,7 +23,7 @@ module.exports = {
         sockets: SHSockets
       },
       log: {
-        level: 'error'
+        level: 'warn'
       },
       globals: false,
       port: 1492
