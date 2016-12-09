@@ -1,8 +1,8 @@
 var assert = require('assert');
 var path = require('path');
+var _ = require('@sailshq/lodash');
 var SailsApp = require('sails').Sails;
 var Sockets = require('../');
-var _ = require('@sailshq/lodash');
 var lifecycle = require('./helpers/lifecycle');
 
 describe('machinepack-sockets: join', function() {
@@ -25,7 +25,9 @@ describe('machinepack-sockets: join', function() {
 
   describe('with valid inputs', function() {
 
-    var socket1, socket2;
+    var socket1;
+    var socket2;
+    var socket3;
 
     before(function(done) {
       socket1 = io.sails.connect('http://localhost:1492', {multiplex: false});
@@ -54,17 +56,17 @@ describe('machinepack-sockets: join', function() {
       var receivedMsg = [];
       _.each([socket1, socket2, socket3], function(socket, index) {
         socket.on('whoopdie', function(data) {
-          if (socket == socket3){
+          if (socket === socket3){
             return done(new Error('Socket #3 should not have gotten the message!'));
           }
           assert.equal(data, 'doo!');
           receivedMsg.push(socket);
-        });
+        });//</on 'whoopdie'>
       });
 
       Sockets.join({
         roomName: 'powerrangers',
-        socketIds: ['/#'+socket1._raw.id, '/#'+socket2._raw.id]
+        socketIds: [socket1._raw.id, socket2._raw.id]
       }).setEnv({sails: app}).execSync();
 
       Sockets.broadcast({
@@ -75,8 +77,10 @@ describe('machinepack-sockets: join', function() {
 
       // Wait 500ms and see who bites
       setTimeout(function() {
-        assert.equal(receivedMsg.length, 2);
-        assert.equal(_.indexOf(receivedMsg, socket3), -1);
+        try {
+          assert.equal(receivedMsg.length, 2);
+          assert.equal(_.indexOf(receivedMsg, socket3), -1);
+        } catch (e) { return done(e); }
         return done();
       }, 500);
 

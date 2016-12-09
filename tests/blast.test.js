@@ -11,7 +11,7 @@ describe('machinepack-sockets: blast', function() {
   var io;
   before(function(done) {
     lifecycle.liftSails({
-      log: { level: 'silly' }
+      // log: { level: 'silly' }
     }, function(err, _sails, _io) {
       if (err) {return done(err);}
       app = _sails;
@@ -30,8 +30,8 @@ describe('machinepack-sockets: blast', function() {
     var socket1, socket2;
 
     before(function(done) {
-      socket1 = io.sails.connect();
-      socket2 = io.sails.connect();
+      socket1 = io.sails.connect({multiplex: false});
+      socket2 = io.sails.connect({multiplex: false});
       var connectedSockets = [];
       _.each([socket1, socket2], function(socket) {
         socket.on('connect', function() {
@@ -44,6 +44,7 @@ describe('machinepack-sockets: blast', function() {
     after(function(done) {
       socket1.disconnect();
       socket2.disconnect();
+
       setTimeout(done, 500);
     });
 

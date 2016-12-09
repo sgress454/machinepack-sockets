@@ -25,7 +25,9 @@ describe('machinepack-sockets: leave', function() {
 
   describe('with valid inputs', function() {
 
-    var socket1, socket2;
+    var socket1;
+    var socket2;
+    var socket3;
 
     before(function(done) {
       socket1 = io.sails.connect('http://localhost:1492', {multiplex: false});
@@ -62,10 +64,10 @@ describe('machinepack-sockets: leave', function() {
         });
       });
 
-      app.sockets.join(['/#'+socket1._raw.id, '/#'+socket2._raw.id, '/#'+socket3._raw.id], 'beyonce');
+      app.sockets.join([socket1._raw.id, socket2._raw.id, socket3._raw.id], 'beyonce');
       Sockets.leave({
         roomName: 'beyonce',
-        socketIds: ['/#'+socket2._raw.id, '/#'+socket3._raw.id]
+        socketIds: [socket2._raw.id, socket3._raw.id]
       }).setEnv({sails: app}).execSync();
 
       Sockets.broadcast({

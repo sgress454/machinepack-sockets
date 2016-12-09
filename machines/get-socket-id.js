@@ -52,12 +52,12 @@ module.exports = {
     // If the request is not a socket request, leave through
     // the `reqNotCompatible` exit.
     if (!env.req.isSocket){
-      return exits.error(new Error('The request was not made via socket.io.'));
+      return exits.reqNotCompatible(new Error('The request was not made via socket.io.'));
     }
 
     // Otherwise return the requesting socket's ID through
     // the `success` exit.
-    return exits.success(env.req._sails.sockets.id(env.req.socket));
+    return exits.success(env.req._sails.sockets.getId(env.req.socket));
   },
 
 };

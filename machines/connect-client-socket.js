@@ -53,11 +53,23 @@ module.exports = {
 
   fn: function (inputs,exits) {
 
-    // Import `socket.io-client`.
-    var SocketIOClient = require('socket.io-client');
+    // Import `machinepack-util` so that we can use its cache-busting require.
+    var Util = require('machinepack-util');
 
     // Import `sails.io.js`.
     var SailsIOClient = require('sails.io.js');
+
+    // Import `socket.io-client`....
+    // but invalidate the existing `socket.io-client` in the require cache
+    // (the one that was already required from this package - if there is one)
+    //
+    // > We do this because `socket.io-client` is inherently stateful,
+    // > and sails.io.js modifies it.  This way, we always get a fresh
+    // > Socket.io client.
+    var SocketIOClient = Util.require({
+      path: require.resolve('socket.io-client'),
+      clearCache: true
+    }).execSync();
 
     // Instantiate the socket client (`io`).
     // We must explicitly pass in the socket.io client when
@@ -87,14 +99,20 @@ module.exports = {
       }
       // Set the spinlock.
       isDoneAlready = true;
-      // Attempt to gracefully disconnect the socket.
-      // TODO: also unbind connection event for performance reasons (i.e. socket.off())
+
+      // Attempt to check if the socket is connected, and if so,
+      // gracefully disconnect it.
+      //
+      // > FUTURE: also potentially unbind connection event for performance reasons
+      // > (i.e. socket.off())
       try {
-        socket.disconnect();
+        if (socket.isConnected()) {
+          socket.disconnect();
+        }
       }
       // Forward errors disconnecting the socket to the `error` exit.
       catch (e) {
-        return exits.error(new Error('Socket took too long, and then there was an additional error disconnecting it:\n'+e.stack));
+        return exits.error(new Error('Socket took too long, and then there was an additional error disconnecting it.  Here it is:\n```\n'+e.stack+'\n```'));
       }
       // Leave through the `tookTooLong` exit.
       return exits.tookTooLong();

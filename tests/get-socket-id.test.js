@@ -16,8 +16,9 @@ describe('machinepack-sockets: get-socket-id', function() {
       routes: {
         '/getSocketId': function(req, res) {
           Sockets.getSocketId().setEnv({req: req}).exec({
-            success: function(socketId) {return res.ok(socketId);},
-            error: function() {return res.ok('reqNotCompatible');}
+            error: function(err) {return res.serverError(err); },
+            reqNotCompatible: function() { return res.ok('reqNotCompatible'); },
+            success: function(socketId) { return res.ok(socketId); }
           });
         }
       }
@@ -49,7 +50,8 @@ describe('machinepack-sockets: get-socket-id', function() {
 
     it('should return the correct socket ID', function(done) {
       socket.get('/getSocketId', function(socketId) {
-        assert.equal(socketId, '/#' + socket._raw.id);
+        // assert.equal(socketId, '/#' + socket._raw.id);
+        assert.equal(socketId, socket._raw.id);
         return done();
       });
     });
@@ -59,6 +61,9 @@ describe('machinepack-sockets: get-socket-id', function() {
 
     it('should return through the `error` exit', function(done) {
       app.request('/getSocketId', function(err, response, body) {
+        if (err) { return done(err); }
+        if (response.statusCode !== 200) { return done(new Error('Expected 200 status code, but instead got:'+response.statusCode)); }
+
         assert.equal(body, 'reqNotCompatible');
         return done();
       });
