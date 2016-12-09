@@ -8,7 +8,7 @@ var sailsioClient = require('sails.io.js');
 module.exports = {
   liftSails: function(opts, cb) {
 
-    var Sails = new SailsApp();
+    var sails = new SailsApp();
     var app;
 
     if (typeof opts === 'function') {
@@ -28,8 +28,10 @@ module.exports = {
       globals: false,
       port: 1492
     }, opts);
-    Sails.lift(opts, function(err, _sails) {
-      if (err) {return cb(err);}
+
+
+    sails.lift(opts, function(err) {
+      if (err) { return cb(err); }
 
       // Instantiate socket client.
       var client = sailsioClient(socketioClient);
@@ -44,7 +46,7 @@ module.exports = {
       io.sails.reconnection = false;
       io.sails.multiplex = false; // (to allow for clean testing of multiple connected sockets)
 
-      return cb(null, _sails, io);
+      return cb(undefined, sails, io);
 
     });
 
@@ -53,7 +55,7 @@ module.exports = {
 
   lowerSails: function(sails, cb) {
     sails.lower(function(err) {
-      if (err) {return cb(err);}
+      if (err) { return cb(err); }
       setTimeout(cb, 500);
     });
   }

@@ -10,7 +10,9 @@ describe('machinepack-sockets: blast', function() {
   var app;
   var io;
   before(function(done) {
-    lifecycle.liftSails(function(err, _sails, _io) {
+    lifecycle.liftSails({
+      log: { level: 'silly' }
+    }, function(err, _sails, _io) {
       if (err) {return done(err);}
       app = _sails;
       io = _io;

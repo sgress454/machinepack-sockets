@@ -11,6 +11,7 @@ describe('machinepack-sockets: broadcast', function() {
   var io;
   before(function(done) {
     lifecycle.liftSails({
+      log: { level: 'silly' },
       routes: {
         '/join': function(req, res) {
           app.sockets.join(req, 'hollapeeps');
