@@ -49,16 +49,16 @@ module.exports = {
 
   fn: function(inputs, exits, env) {
 
-    // Import the `isObject` Lodash function.
-    var _isObject = require('lodash.isobject');
+    // Import Lodash.
+    var _ = require('@sailshq/lodash');
 
     // If we don't have a Sails app in our environment, bail through the `error` exit.
-    if (!_isObject(env.sails) || env.sails.constructor.name !== 'Sails') {
+    if (!_.isObject(env.sails) || env.sails.constructor.name !== 'Sails') {
       return exits.error(new Error('A valid Sails app must be provided through `.setEnv()` in order to use this machine.'));
     }
 
     // If we don't have the sockets hook enabled in our environment, bail through the `error` exit.
-    if (!_isObject(env.sails.sockets)) {
+    if (!_.isObject(env.sails.sockets)) {
       return exits.error(new Error('The `sockets` hook must be enabled on the passed-in Sails app in order to use this machine.'));
     }
 

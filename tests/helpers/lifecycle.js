@@ -1,6 +1,7 @@
 var path = require('path');
+var _ = require('@sailshq/lodash');
 var SailsApp = require('sails').Sails;
-var _ = require('lodash');
+var SHSockets = require('sails-hook-sockets');
 var socketioClient = require('socket.io-client');
 var sailsioClient = require('sails.io.js');
 
@@ -16,8 +17,14 @@ module.exports = {
     }
 
     opts = _.extend({
-      hooks: {grunt: false, views: false},
-      log: {level: 'error'},
+      hooks: {
+        grunt: false,
+        views: false,
+        sockets: SHSockets
+      },
+      log: {
+        level: 'error'
+      },
       globals: false,
       port: 1492
     }, opts);

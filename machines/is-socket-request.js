@@ -37,11 +37,11 @@ module.exports = {
 
   fn: function(inputs, exits, env) {
 
-    // Import the `isObject` Lodash function.
-    var _isObject = require('lodash.isobject');
+    // Import Lodash.
+    var _ = require('@sailshq/lodash');
 
     // If we don't have a request object in our environment, bail through the `error` exit.
-    if (!_isObject(env.req) || !_isObject(env.req._sails) || env.req._sails.constructor.name !== 'Sails') {
+    if (!_.isObject(env.req) || !_.isObject(env.req._sails) || env.req._sails.constructor.name !== 'Sails') {
       return exits.error(new Error('A valid Sails request object must be provided through `.setEnv()` in order to use this machine.'));
     }
 

@@ -1,8 +1,8 @@
 var assert = require('assert');
 var path = require('path');
+var _ = require('@sailshq/lodash');
 var SailsApp = require('sails').Sails;
 var Sockets = require('../');
-var _ = require('lodash');
 var lifecycle = require('./helpers/lifecycle');
 
 describe('machinepack-sockets: leave', function() {
